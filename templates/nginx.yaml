@@ -1,0 +1,23 @@
+name: nginx-web
+description: Nginx Webserver
+image: nginx:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:80"
+
+volumes:
+  - "${html_dir}:/usr/share/nginx/html:ro"
+
+variables:
+  port:
+    description: "Port auf dem Host"
+    default: "8080"
+  html_dir:
+    description: "Pfad zum HTML-Verzeichnis"
+    default: "./html"
+
+info: |
+  Nginx Webserver läuft jetzt!
+  Lege deine HTML-Dateien in das konfigurierte Verzeichnis.

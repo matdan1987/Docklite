@@ -1,0 +1,29 @@
+name: portainer
+description: Portainer - Docker GUI Management
+image: portainer/portainer-ce:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:9000"
+  - "${edge_port}:8000"
+
+volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
+  - "${data_dir}:/data"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "9000"
+  edge_port:
+    description: "Edge Agent Port"
+    default: "8000"
+  data_dir:
+    description: "Pfad für Daten"
+    default: "./portainer-data"
+
+info: |
+  Portainer läuft jetzt!
+  Öffne http://localhost:${port} im Browser
+  Erstelle beim ersten Start einen Admin-Account

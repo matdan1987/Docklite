@@ -1,0 +1,42 @@
+name: wordpress
+description: WordPress CMS
+image: wordpress:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:80"
+
+volumes:
+  - "${data_dir}:/var/www/html"
+
+environment:
+  WORDPRESS_DB_HOST: "${db_host}"
+  WORDPRESS_DB_USER: "${db_user}"
+  WORDPRESS_DB_PASSWORD: "${db_password}"
+  WORDPRESS_DB_NAME: "${db_name}"
+
+variables:
+  port:
+    description: "Web Port"
+    default: "8080"
+  db_host:
+    description: "Datenbank Host"
+    default: "mysql-db:3306"
+  db_user:
+    description: "Datenbank Benutzer"
+    default: "wordpress"
+  db_password:
+    description: "Datenbank Passwort"
+    default: "wordpress"
+  db_name:
+    description: "Datenbank Name"
+    default: "wordpress"
+  data_dir:
+    description: "Pfad für Daten"
+    default: "./wordpress-data"
+
+info: |
+  WordPress läuft jetzt!
+  Öffne http://localhost:${port} im Browser
+  WICHTIG: Du brauchst eine MySQL/MariaDB Datenbank!

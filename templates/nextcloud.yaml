@@ -1,0 +1,34 @@
+name: nextcloud
+description: Nextcloud - Private Cloud Storage
+image: nextcloud:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:80"
+
+volumes:
+  - "${data_dir}:/var/www/html"
+
+environment:
+  NEXTCLOUD_ADMIN_USER: "${admin_user}"
+  NEXTCLOUD_ADMIN_PASSWORD: "${admin_password}"
+
+variables:
+  port:
+    description: "Web Port"
+    default: "8080"
+  admin_user:
+    description: "Admin Benutzername"
+    default: "admin"
+  admin_password:
+    description: "Admin Passwort"
+    default: "admin123"
+  data_dir:
+    description: "Pfad für Daten"
+    default: "./nextcloud-data"
+
+info: |
+  Nextcloud läuft jetzt!
+  Öffne http://localhost:${port} im Browser
+  Login: ${admin_user} / ${admin_password}

@@ -1,0 +1,28 @@
+name: redis-cache
+description: Redis Cache Server
+image: redis:7-alpine
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:6379"
+
+volumes:
+  - "${data_dir}:/data"
+
+command:
+  - "redis-server"
+  - "--appendonly"
+  - "yes"
+
+variables:
+  port:
+    description: "Port auf dem Host"
+    default: "6379"
+  data_dir:
+    description: "Pfad für Daten"
+    default: "./redis-data"
+
+info: |
+  Redis Server läuft jetzt!
+  Verbindung: redis://localhost:${port}

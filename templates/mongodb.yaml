@@ -1,0 +1,33 @@
+name: mongodb
+description: MongoDB NoSQL Datenbank
+image: mongo:7
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:27017"
+
+volumes:
+  - "${data_dir}:/data/db"
+
+environment:
+  MONGO_INITDB_ROOT_USERNAME: "${user}"
+  MONGO_INITDB_ROOT_PASSWORD: "${password}"
+
+variables:
+  port:
+    description: "Port auf dem Host"
+    default: "27017"
+  user:
+    description: "Admin Benutzer"
+    default: "admin"
+  password:
+    description: "Admin Passwort"
+    default: "adminpassword"
+  data_dir:
+    description: "Pfad für Daten"
+    default: "./mongodb-data"
+
+info: |
+  MongoDB läuft jetzt!
+  Verbindung: mongodb://${user}:${password}@localhost:${port}

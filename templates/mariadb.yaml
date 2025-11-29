@@ -1,0 +1,41 @@
+name: mariadb
+description: MariaDB Datenbank
+image: mariadb:11
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:3306"
+
+volumes:
+  - "${data_dir}:/var/lib/mysql"
+
+environment:
+  MARIADB_ROOT_PASSWORD: "${root_password}"
+  MARIADB_DATABASE: "${database}"
+  MARIADB_USER: "${user}"
+  MARIADB_PASSWORD: "${password}"
+
+variables:
+  port:
+    description: "Port auf dem Host"
+    default: "3306"
+  root_password:
+    description: "Root Passwort"
+    default: "rootpassword"
+  password:
+    description: "Benutzer Passwort"
+    default: "userpassword"
+  user:
+    description: "Datenbank Benutzer"
+    default: "myuser"
+  database:
+    description: "Datenbank Name"
+    default: "mydb"
+  data_dir:
+    description: "Pfad für Daten"
+    default: "./mariadb-data"
+
+info: |
+  MariaDB läuft jetzt!
+  Verbindung: mysql://${user}:${password}@localhost:${port}/${database}
