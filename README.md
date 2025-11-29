@@ -45,13 +45,17 @@ Falls Docker noch nicht installiert ist:
 
 2. Python-Abhängigkeiten installieren:
    ```bash
-   pip install -r requirements.txt
+   pip3 install -r requirements.txt
+   # oder auf manchen Systemen:
+   # pip install -r requirements.txt
    ```
 
-3. Skript ausführbar machen (Linux/macOS):
+3. Skript ausführbar machen (optional, Linux/macOS):
    ```bash
    chmod +x docklite.py
    ```
+
+**Hinweis für Debian/Ubuntu:** Verwende `python3` und `pip3` statt `python` und `pip`!
 
 ## 📖 Verwendung
 
@@ -60,7 +64,9 @@ Falls Docker noch nicht installiert ist:
 Einfach das Skript ohne Parameter starten:
 
 ```bash
-python docklite.py
+python3 docklite.py
+# oder wenn python3 als python verlinkt ist:
+# python docklite.py
 ```
 
 Du bekommst ein übersichtliches Menü mit folgenden Optionen:
@@ -80,25 +86,25 @@ Falls du lieber direkt Befehle eingibst:
 #### Verfügbare Templates anzeigen
 
 ```bash
-python docklite.py list
+python3 docklite.py list
 ```
 
 #### Template-Informationen anzeigen
 
 ```bash
-python docklite.py info nginx
+python3 docklite.py info nginx
 ```
 
 #### Container deployen
 
 ```bash
-python docklite.py deploy nginx
+python3 docklite.py deploy nginx
 ```
 
 #### Mit benutzerdefinierten Variablen deployen
 
 ```bash
-python docklite.py deploy nginx --var port=8080 --var html_dir=/path/to/html
+python3 docklite.py deploy nginx --var port=8080 --var html_dir=/path/to/html
 ```
 
 ## 📦 Verfügbare Homelab-Anwendungen
@@ -134,7 +140,7 @@ python docklite.py deploy nginx --var port=8080 --var html_dir=/path/to/html
 ### Beispiel 1: Jellyfin Media Server
 
 ```bash
-python docklite.py deploy jellyfin
+python3 docklite.py deploy jellyfin
 ```
 
 Deine eigene Netflix-Alternative! Lege deine Filme und Serien in das Media-Verzeichnis und streame sie überall.
@@ -142,7 +148,7 @@ Deine eigene Netflix-Alternative! Lege deine Filme und Serien in das Media-Verze
 ### Beispiel 2: Vaultwarden Passwort Manager
 
 ```bash
-python docklite.py deploy vaultwarden
+python3 docklite.py deploy vaultwarden
 ```
 
 Sichere all deine Passwörter selbst-gehostet! Kompatibel mit Bitwarden Apps und Browser-Extensions.
@@ -150,7 +156,7 @@ Sichere all deine Passwörter selbst-gehostet! Kompatibel mit Bitwarden Apps und
 ### Beispiel 3: Homepage Dashboard
 
 ```bash
-python docklite.py deploy homepage
+python3 docklite.py deploy homepage
 ```
 
 Erstelle ein schönes Dashboard für all deine Homelab-Services!
@@ -158,7 +164,7 @@ Erstelle ein schönes Dashboard für all deine Homelab-Services!
 ### Beispiel 4: Portainer (Docker GUI)
 
 ```bash
-python docklite.py deploy portainer
+python3 docklite.py deploy portainer
 ```
 
 Nach dem Start öffne `http://localhost:9000` und erstelle einen Admin-Account.

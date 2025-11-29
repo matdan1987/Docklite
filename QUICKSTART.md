@@ -32,10 +32,13 @@ Falls nicht installiert, siehe [Docker Installation](#docker-installieren) am En
 cd Docklite
 
 # 2. Python-Abhängigkeiten installieren
-pip install -r requirements.txt
+pip3 install -r requirements.txt
+# Falls pip3 nicht existiert, versuche: pip install -r requirements.txt
 
 # Fertig! Das war's schon. 🎉
 ```
+
+**Hinweis:** Auf Debian/Ubuntu heißt es `pip3` und `python3`!
 
 ## Schritt 3: Deinen ersten Container starten 🐳
 
@@ -44,7 +47,8 @@ pip install -r requirements.txt
 Starte einfach das Skript **ohne Parameter**:
 
 ```bash
-python docklite.py
+python3 docklite.py
+# Falls python3 nicht existiert, versuche: python docklite.py
 ```
 
 Du siehst jetzt ein schönes Menü wie dieses:
@@ -79,10 +83,10 @@ Falls du die klassischen Befehle bevorzugst:
 
 ```bash
 # 1. Verfügbare Templates ansehen
-python docklite.py list
+python3 docklite.py list
 
 # 2. Nginx deployen
-python docklite.py deploy nginx
+python3 docklite.py deploy nginx
 ```
 
 Du wirst gefragt:
