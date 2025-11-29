@@ -238,287 +238,250 @@ def interactive_menu():
         clear_screen()
         show_banner()
 
-        print("\n📋 HAUPTMENÜ")
+        # Lade alle Templates
+        templates = manager.list_templates()
+
+        print("\n📦 HOMELAB-ANWENDUNGEN - Wähle zum Deployen:")
         print("=" * 62)
         print()
-        print("  [1] 📦 Container deployen (starten)")
-        print("  [2] 📋 Alle verfügbaren Templates anzeigen")
-        print("  [3] ℹ️  Template-Informationen anzeigen")
-        print("  [4] 🐳 Laufende Container anzeigen")
-        print("  [5] 🛑 Container stoppen")
-        print("  [6] 🗑️  Container entfernen")
-        print("  [0] ❌ Beenden")
-        print()
-        print("=" * 62)
 
-        choice = input("\n👉 Deine Wahl [0-6]: ").strip()
-
-        if choice == '1':
-            # Container deployen
-            clear_screen()
-            show_banner()
-            print("\n📦 CONTAINER DEPLOYEN")
-            print("=" * 62)
-
-            templates = manager.list_templates()
-            if not templates:
-                print("\n❌ Keine Templates gefunden!")
-                input("\nDrücke Enter um fortzufahren...")
-                continue
-
-            print("\nVerfügbare Templates:\n")
+        if not templates:
+            print("❌ Keine Templates gefunden!")
+        else:
+            # Zeige alle Apps direkt im Hauptmenü
             for idx, template in enumerate(templates, 1):
                 try:
                     info = manager.load_template(template)
                     desc = info.get('description', 'Keine Beschreibung')
-                    print(f"  [{idx}] {template:20s} - {desc}")
+                    # Kürze Beschreibung falls zu lang
+                    if len(desc) > 40:
+                        desc = desc[:37] + "..."
+                    print(f"  [{idx:2d}] {desc}")
                 except Exception:
-                    print(f"  [{idx}] {template}")
+                    print(f"  [{idx:2d}] {template}")
 
-            print(f"\n  [0] Zurück zum Hauptmenü")
-            print()
+        print()
+        print("─" * 62)
+        print("\n🛠️  VERWALTUNG:")
+        print(f"  [{len(templates)+1}] 🐳 Laufende Container anzeigen")
+        print(f"  [{len(templates)+2}] 🛑 Container stoppen")
+        print(f"  [{len(templates)+3}] 🗑️  Container entfernen")
+        print(f"  [{len(templates)+4}] ℹ️  Template-Info anzeigen")
+        print()
+        print("  [0] ❌ Beenden")
+        print()
+        print("=" * 62)
 
-            selection = input("👉 Welches Template möchtest du deployen? [0-{}]: ".format(len(templates))).strip()
+        max_choice = len(templates) + 4
+        choice = input(f"\n👉 Deine Wahl [0-{max_choice}]: ").strip()
 
-            if selection == '0':
-                continue
-
-            try:
-                idx = int(selection) - 1
-                if 0 <= idx < len(templates):
-                    template_name = templates[idx]
-                    print(f"\n▶️  Deploye '{template_name}'...\n")
-                    try:
-                        manager.deploy_container(template_name)
-                        print("\n" + "=" * 62)
-                        input("\n✅ Fertig! Drücke Enter um fortzufahren...")
-                    except FileNotFoundError as e:
-                        print(f"\n❌ {e}")
-                        input("\nDrücke Enter um fortzufahren...")
-                    except Exception as e:
-                        print(f"\n❌ Fehler: {e}")
-                        input("\nDrücke Enter um fortzufahren...")
-                else:
-                    print("\n❌ Ungültige Auswahl!")
-                    input("\nDrücke Enter um fortzufahren...")
-            except ValueError:
-                print("\n❌ Bitte gib eine Zahl ein!")
-                input("\nDrücke Enter um fortzufahren...")
-
-        elif choice == '2':
-            # Templates auflisten
-            clear_screen()
-            show_banner()
-            print("\n📋 VERFÜGBARE TEMPLATES")
-            print("=" * 62)
-
-            templates = manager.list_templates()
-            if not templates:
-                print("\n❌ Keine Templates gefunden!")
-            else:
-                print()
-                for idx, template in enumerate(templates, 1):
-                    try:
-                        info = manager.load_template(template)
-                        desc = info.get('description', 'Keine Beschreibung')
-                        image = info.get('image', 'Unbekannt')
-                        print(f"  [{idx}] {template}")
-                        print(f"      📝 {desc}")
-                        print(f"      🐳 Image: {image}")
-                        print()
-                    except Exception:
-                        print(f"  [{idx}] {template}")
-                        print()
-
-            input("\nDrücke Enter um fortzufahren...")
-
-        elif choice == '3':
-            # Template-Info anzeigen
-            clear_screen()
-            show_banner()
-            print("\n ℹ️  TEMPLATE-INFORMATIONEN")
-            print("=" * 62)
-
-            templates = manager.list_templates()
-            if not templates:
-                print("\n❌ Keine Templates gefunden!")
-                input("\nDrücke Enter um fortzufahren...")
-                continue
-
-            print("\nVerfügbare Templates:\n")
-            for idx, template in enumerate(templates, 1):
-                print(f"  [{idx}] {template}")
-
-            print(f"\n  [0] Zurück zum Hauptmenü")
-            print()
-
-            selection = input("👉 Welches Template? [0-{}]: ".format(len(templates))).strip()
-
-            if selection == '0':
-                continue
-
-            try:
-                idx = int(selection) - 1
-                if 0 <= idx < len(templates):
-                    template_name = templates[idx]
-                    try:
-                        manager.show_template_info(template_name)
-                        input("\nDrücke Enter um fortzufahren...")
-                    except FileNotFoundError as e:
-                        print(f"\n❌ {e}")
-                        input("\nDrücke Enter um fortzufahren...")
-                else:
-                    print("\n❌ Ungültige Auswahl!")
-                    input("\nDrücke Enter um fortzufahren...")
-            except ValueError:
-                print("\n❌ Bitte gib eine Zahl ein!")
-                input("\nDrücke Enter um fortzufahren...")
-
-        elif choice == '4':
-            # Laufende Container anzeigen
-            clear_screen()
-            show_banner()
-            print("\n🐳 LAUFENDE CONTAINER")
-            print("=" * 62)
-            print()
-
-            try:
-                subprocess.run(['docker', 'ps', '--format', 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'])
-                print()
-            except Exception as e:
-                print(f"❌ Fehler: {e}")
-
-            input("\nDrücke Enter um fortzufahren...")
-
-        elif choice == '5':
-            # Container stoppen
-            clear_screen()
-            show_banner()
-            print("\n🛑 CONTAINER STOPPEN")
-            print("=" * 62)
-            print()
-
-            try:
-                # Zeige laufende Container
-                result = subprocess.run(['docker', 'ps', '--format', '{{.Names}}'],
-                                      capture_output=True, text=True)
-                containers = result.stdout.strip().split('\n')
-                containers = [c for c in containers if c]
-
-                if not containers:
-                    print("✅ Keine laufenden Container gefunden.")
-                    input("\nDrücke Enter um fortzufahren...")
-                    continue
-
-                print("Laufende Container:\n")
-                for idx, container in enumerate(containers, 1):
-                    print(f"  [{idx}] {container}")
-
-                print(f"\n  [0] Zurück zum Hauptmenü")
-                print()
-
-                selection = input("👉 Welchen Container stoppen? [0-{}]: ".format(len(containers))).strip()
-
-                if selection == '0':
-                    continue
-
-                try:
-                    idx = int(selection) - 1
-                    if 0 <= idx < len(containers):
-                        container_name = containers[idx]
-                        print(f"\n🛑 Stoppe Container '{container_name}'...")
-                        subprocess.run(['docker', 'stop', container_name], check=True)
-                        print(f"✅ Container '{container_name}' wurde gestoppt!")
-                        input("\nDrücke Enter um fortzufahren...")
-                    else:
-                        print("\n❌ Ungültige Auswahl!")
-                        input("\nDrücke Enter um fortzufahren...")
-                except ValueError:
-                    print("\n❌ Bitte gib eine Zahl ein!")
-                    input("\nDrücke Enter um fortzufahren...")
-                except Exception as e:
-                    print(f"\n❌ Fehler: {e}")
-                    input("\nDrücke Enter um fortzufahren...")
-
-            except Exception as e:
-                print(f"❌ Fehler: {e}")
-                input("\nDrücke Enter um fortzufahren...")
-
-        elif choice == '6':
-            # Container entfernen
-            clear_screen()
-            show_banner()
-            print("\n🗑️  CONTAINER ENTFERNEN")
-            print("=" * 62)
-            print()
-
-            try:
-                # Zeige alle Container (auch gestoppte)
-                result = subprocess.run(['docker', 'ps', '-a', '--format', '{{.Names}}'],
-                                      capture_output=True, text=True)
-                containers = result.stdout.strip().split('\n')
-                containers = [c for c in containers if c]
-
-                if not containers:
-                    print("✅ Keine Container gefunden.")
-                    input("\nDrücke Enter um fortzufahren...")
-                    continue
-
-                print("Alle Container:\n")
-                for idx, container in enumerate(containers, 1):
-                    # Status anzeigen
-                    status_result = subprocess.run(
-                        ['docker', 'ps', '-a', '--filter', f'name={container}', '--format', '{{.Status}}'],
-                        capture_output=True, text=True
-                    )
-                    status = status_result.stdout.strip()
-                    status_icon = "🟢" if "Up" in status else "🔴"
-                    print(f"  [{idx}] {status_icon} {container} ({status})")
-
-                print(f"\n  [0] Zurück zum Hauptmenü")
-                print()
-
-                selection = input("👉 Welchen Container entfernen? [0-{}]: ".format(len(containers))).strip()
-
-                if selection == '0':
-                    continue
-
-                try:
-                    idx = int(selection) - 1
-                    if 0 <= idx < len(containers):
-                        container_name = containers[idx]
-
-                        confirm = input(f"\n⚠️  Container '{container_name}' wirklich entfernen? [j/N]: ").strip().lower()
-
-                        if confirm in ['j', 'ja', 'y', 'yes']:
-                            print(f"\n🗑️  Entferne Container '{container_name}'...")
-                            subprocess.run(['docker', 'rm', '-f', container_name], check=True)
-                            print(f"✅ Container '{container_name}' wurde entfernt!")
-                        else:
-                            print("❌ Abgebrochen.")
-
-                        input("\nDrücke Enter um fortzufahren...")
-                    else:
-                        print("\n❌ Ungültige Auswahl!")
-                        input("\nDrücke Enter um fortzufahren...")
-                except ValueError:
-                    print("\n❌ Bitte gib eine Zahl ein!")
-                    input("\nDrücke Enter um fortzufahren...")
-                except Exception as e:
-                    print(f"\n❌ Fehler: {e}")
-                    input("\nDrücke Enter um fortzufahren...")
-
-            except Exception as e:
-                print(f"❌ Fehler: {e}")
-                input("\nDrücke Enter um fortzufahren...")
-
-        elif choice == '0':
+        if choice == '0':
             clear_screen()
             print("\n👋 Tschüss! Viel Spaß mit Docker! 🐳\n")
             sys.exit(0)
 
-        else:
-            print("\n❌ Ungültige Eingabe! Bitte wähle 0-6.")
+        try:
+            choice_num = int(choice)
+
+            # Container deployen (1 bis len(templates))
+            if 1 <= choice_num <= len(templates):
+                template_name = templates[choice_num - 1]
+                clear_screen()
+                show_banner()
+                print(f"\n▶️  Deploye '{template_name}'...")
+                print("=" * 62)
+                print()
+                try:
+                    manager.deploy_container(template_name)
+                    print("\n" + "=" * 62)
+                    input("\n✅ Fertig! Drücke Enter um fortzufahren...")
+                except FileNotFoundError as e:
+                    print(f"\n❌ {e}")
+                    input("\nDrücke Enter um fortzufahren...")
+                except Exception as e:
+                    print(f"\n❌ Fehler: {e}")
+                    input("\nDrücke Enter um fortzufahren...")
+
+            # Laufende Container anzeigen
+            elif choice_num == len(templates) + 1:
+                clear_screen()
+                show_banner()
+                print("\n🐳 LAUFENDE CONTAINER")
+                print("=" * 62)
+                print()
+
+                try:
+                    subprocess.run(['docker', 'ps', '--format', 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'])
+                    print()
+                except Exception as e:
+                    print(f"❌ Fehler: {e}")
+
+                input("\nDrücke Enter um fortzufahren...")
+
+            # Container stoppen
+            elif choice_num == len(templates) + 2:
+                clear_screen()
+                show_banner()
+                print("\n🛑 CONTAINER STOPPEN")
+                print("=" * 62)
+                print()
+
+                try:
+                    # Zeige laufende Container
+                    result = subprocess.run(['docker', 'ps', '--format', '{{.Names}}'],
+                                          capture_output=True, text=True)
+                    containers = result.stdout.strip().split('\n')
+                    containers = [c for c in containers if c]
+
+                    if not containers:
+                        print("✅ Keine laufenden Container gefunden.")
+                        input("\nDrücke Enter um fortzufahren...")
+                        continue
+
+                    print("Laufende Container:\n")
+                    for idx, container in enumerate(containers, 1):
+                        print(f"  [{idx}] {container}")
+
+                    print(f"\n  [0] Zurück zum Hauptmenü")
+                    print()
+
+                    selection = input("👉 Welchen Container stoppen? [0-{}]: ".format(len(containers))).strip()
+
+                    if selection == '0':
+                        continue
+
+                    try:
+                        idx = int(selection) - 1
+                        if 0 <= idx < len(containers):
+                            container_name = containers[idx]
+                            print(f"\n🛑 Stoppe Container '{container_name}'...")
+                            subprocess.run(['docker', 'stop', container_name], check=True)
+                            print(f"✅ Container '{container_name}' wurde gestoppt!")
+                            input("\nDrücke Enter um fortzufahren...")
+                        else:
+                            print("\n❌ Ungültige Auswahl!")
+                            input("\nDrücke Enter um fortzufahren...")
+                    except ValueError:
+                        print("\n❌ Bitte gib eine Zahl ein!")
+                        input("\nDrücke Enter um fortzufahren...")
+                    except Exception as e:
+                        print(f"\n❌ Fehler: {e}")
+                        input("\nDrücke Enter um fortzufahren...")
+
+                except Exception as e:
+                    print(f"❌ Fehler: {e}")
+                    input("\nDrücke Enter um fortzufahren...")
+
+            # Container entfernen
+            elif choice_num == len(templates) + 3:
+                clear_screen()
+                show_banner()
+                print("\n🗑️  CONTAINER ENTFERNEN")
+                print("=" * 62)
+                print()
+
+                try:
+                    # Zeige alle Container (auch gestoppte)
+                    result = subprocess.run(['docker', 'ps', '-a', '--format', '{{.Names}}'],
+                                          capture_output=True, text=True)
+                    containers = result.stdout.strip().split('\n')
+                    containers = [c for c in containers if c]
+
+                    if not containers:
+                        print("✅ Keine Container gefunden.")
+                        input("\nDrücke Enter um fortzufahren...")
+                        continue
+
+                    print("Alle Container:\n")
+                    for idx, container in enumerate(containers, 1):
+                        # Status anzeigen
+                        status_result = subprocess.run(
+                            ['docker', 'ps', '-a', '--filter', f'name={container}', '--format', '{{.Status}}'],
+                            capture_output=True, text=True
+                        )
+                        status = status_result.stdout.strip()
+                        status_icon = "🟢" if "Up" in status else "🔴"
+                        print(f"  [{idx}] {status_icon} {container} ({status})")
+
+                    print(f"\n  [0] Zurück zum Hauptmenü")
+                    print()
+
+                    selection = input("👉 Welchen Container entfernen? [0-{}]: ".format(len(containers))).strip()
+
+                    if selection == '0':
+                        continue
+
+                    try:
+                        idx = int(selection) - 1
+                        if 0 <= idx < len(containers):
+                            container_name = containers[idx]
+
+                            confirm = input(f"\n⚠️  Container '{container_name}' wirklich entfernen? [j/N]: ").strip().lower()
+
+                            if confirm in ['j', 'ja', 'y', 'yes']:
+                                print(f"\n🗑️  Entferne Container '{container_name}'...")
+                                subprocess.run(['docker', 'rm', '-f', container_name], check=True)
+                                print(f"✅ Container '{container_name}' wurde entfernt!")
+                            else:
+                                print("❌ Abgebrochen.")
+
+                            input("\nDrücke Enter um fortzufahren...")
+                        else:
+                            print("\n❌ Ungültige Auswahl!")
+                            input("\nDrücke Enter um fortzufahren...")
+                    except ValueError:
+                        print("\n❌ Bitte gib eine Zahl ein!")
+                        input("\nDrücke Enter um fortzufahren...")
+                    except Exception as e:
+                        print(f"\n❌ Fehler: {e}")
+                        input("\nDrücke Enter um fortzufahren...")
+
+                except Exception as e:
+                    print(f"❌ Fehler: {e}")
+                    input("\nDrücke Enter um fortzufahren...")
+
+            # Template-Info anzeigen
+            elif choice_num == len(templates) + 4:
+                clear_screen()
+                show_banner()
+                print("\nℹ️  TEMPLATE-INFORMATIONEN")
+                print("=" * 62)
+
+                print("\nVerfügbare Templates:\n")
+                for idx, template in enumerate(templates, 1):
+                    print(f"  [{idx}] {template}")
+
+                print(f"\n  [0] Zurück zum Hauptmenü")
+                print()
+
+                selection = input("👉 Welches Template? [0-{}]: ".format(len(templates))).strip()
+
+                if selection == '0':
+                    continue
+
+                try:
+                    idx = int(selection) - 1
+                    if 0 <= idx < len(templates):
+                        template_name = templates[idx]
+                        try:
+                            manager.show_template_info(template_name)
+                            input("\nDrücke Enter um fortzufahren...")
+                        except FileNotFoundError as e:
+                            print(f"\n❌ {e}")
+                            input("\nDrücke Enter um fortzufahren...")
+                    else:
+                        print("\n❌ Ungültige Auswahl!")
+                        input("\nDrücke Enter um fortzufahren...")
+                except ValueError:
+                    print("\n❌ Bitte gib eine Zahl ein!")
+                    input("\nDrücke Enter um fortzufahren...")
+
+            else:
+                print("\n❌ Ungültige Eingabe!")
+                input("\nDrücke Enter um fortzufahren...")
+
+        except ValueError:
+            print(f"\n❌ Bitte gib eine Zahl zwischen 0 und {max_choice} ein!")
             input("\nDrücke Enter um fortzufahren...")
 
 
