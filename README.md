@@ -39,7 +39,7 @@ Falls Docker noch nicht installiert ist:
 
 1. Repository klonen:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/matdan1987/Docklite.git
    cd Docklite
    ```
 
