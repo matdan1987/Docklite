@@ -1,0 +1,31 @@
+name: heimdall
+description: Heimdall - Dashboard für deine Homelab-Apps
+image: linuxserver/heimdall:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:80"
+
+volumes:
+  - "${config_dir}:/config"
+
+environment:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "Europe/Berlin"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "8080"
+  config_dir:
+    description: "Config-Verzeichnis"
+    default: "./heimdall-config"
+
+info: |
+  Heimdall Dashboard läuft jetzt!
+  Öffne http://localhost:${port}
+
+  Füge alle deine Homelab-Apps als Kacheln hinzu für einen
+  schönen Übersichts-Dashboard!

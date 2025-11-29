@@ -1,0 +1,38 @@
+name: vaultwarden
+description: Vaultwarden - Passwort Manager (Bitwarden kompatibel)
+image: vaultwarden/server:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:80"
+
+volumes:
+  - "${data_dir}:/data"
+
+environment:
+  SIGNUPS_ALLOWED: "${signups}"
+  ADMIN_TOKEN: "${admin_token}"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "8080"
+  data_dir:
+    description: "Daten-Verzeichnis"
+    default: "./vaultwarden-data"
+  signups:
+    description: "Registrierungen erlauben (true/false)"
+    default: "true"
+  admin_token:
+    description: "Admin-Token (leer lassen für zufällig)"
+    default: ""
+
+info: |
+  Vaultwarden läuft jetzt!
+  Öffne http://localhost:${port}
+
+  WICHTIG: Erstelle sofort einen Account!
+  Dann setze SIGNUPS_ALLOWED auf 'false' für Sicherheit.
+
+  Nutze die Bitwarden Browser-Extension oder App zum Verbinden.

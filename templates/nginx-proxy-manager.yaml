@@ -1,0 +1,37 @@
+name: nginx-proxy-manager
+description: Nginx Proxy Manager - Einfacher Reverse Proxy mit SSL
+image: jc21/nginx-proxy-manager:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "80:80"
+  - "443:443"
+  - "${admin_port}:81"
+
+volumes:
+  - "${data_dir}:/data"
+  - "${letsencrypt_dir}:/etc/letsencrypt"
+
+variables:
+  admin_port:
+    description: "Admin Interface Port"
+    default: "81"
+  data_dir:
+    description: "Daten-Verzeichnis"
+    default: "./npm-data"
+  letsencrypt_dir:
+    description: "Let's Encrypt Zertifikate"
+    default: "./npm-letsencrypt"
+
+info: |
+  Nginx Proxy Manager läuft jetzt!
+  Admin UI: http://localhost:${admin_port}
+
+  Standard Login:
+  Email: admin@example.com
+  Passwort: changeme
+
+  WICHTIG: Ändere das Passwort sofort beim ersten Login!
+
+  Richte SSL-Zertifikate und Reverse Proxies ein!

@@ -1,0 +1,55 @@
+name: paperless-ngx
+description: Paperless-ngx - Dokumenten-Management System
+image: ghcr.io/paperless-ngx/paperless-ngx:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:8000"
+
+volumes:
+  - "${data_dir}:/usr/src/paperless/data"
+  - "${media_dir}:/usr/src/paperless/media"
+  - "${export_dir}:/usr/src/paperless/export"
+  - "${consume_dir}:/usr/src/paperless/consume"
+
+environment:
+  PAPERLESS_ADMIN_USER: "${admin_user}"
+  PAPERLESS_ADMIN_PASSWORD: "${admin_password}"
+  PAPERLESS_SECRET_KEY: "${secret_key}"
+  PAPERLESS_TIME_ZONE: "Europe/Berlin"
+  PAPERLESS_OCR_LANGUAGE: "deu"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "8000"
+  admin_user:
+    description: "Admin Benutzername"
+    default: "admin"
+  admin_password:
+    description: "Admin Passwort"
+    default: "admin"
+  secret_key:
+    description: "Secret Key (leer für zufällig)"
+    default: "change-me-please-use-a-random-string"
+  data_dir:
+    description: "Daten-Verzeichnis"
+    default: "./paperless-data"
+  media_dir:
+    description: "Media-Verzeichnis"
+    default: "./paperless-media"
+  export_dir:
+    description: "Export-Verzeichnis"
+    default: "./paperless-export"
+  consume_dir:
+    description: "Consume-Verzeichnis (hier Dokumente reinlegen)"
+    default: "./paperless-consume"
+
+info: |
+  Paperless-ngx läuft jetzt!
+  Öffne http://localhost:${port}
+  Login: ${admin_user} / ${admin_password}
+
+  Lege Dokumente in ${consume_dir} ab, sie werden automatisch
+  gescannt, OCR-verarbeitet und archiviert!

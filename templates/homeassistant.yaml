@@ -1,0 +1,34 @@
+name: homeassistant
+description: Home Assistant - Open Source Smart Home
+image: homeassistant/home-assistant:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:8123"
+
+volumes:
+  - "${config_dir}:/config"
+
+environment:
+  TZ: "Europe/Berlin"
+
+options:
+  - "--privileged"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "8123"
+  config_dir:
+    description: "Config-Verzeichnis"
+    default: "./homeassistant-config"
+
+info: |
+  Home Assistant läuft jetzt!
+  Öffne http://localhost:${port}
+
+  Deine zentrale Smart Home Plattform!
+  Erstelle beim ersten Start einen Account.
+
+  Verbinde alle deine Smart Home Geräte!

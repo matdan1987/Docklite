@@ -1,0 +1,38 @@
+name: photoprism
+description: PhotoPrism - KI-basierte Fotoverwaltung
+image: photoprism/photoprism:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:2342"
+
+volumes:
+  - "${photos_dir}:/photoprism/originals"
+  - "${storage_dir}:/photoprism/storage"
+
+environment:
+  PHOTOPRISM_ADMIN_PASSWORD: "${password}"
+  PHOTOPRISM_UPLOAD_NSFW: "true"
+  PHOTOPRISM_DATABASE_DRIVER: "sqlite"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "2342"
+  password:
+    description: "Admin Passwort"
+    default: "photoprism"
+  photos_dir:
+    description: "Fotos-Verzeichnis"
+    default: "./photos"
+  storage_dir:
+    description: "Storage-Verzeichnis"
+    default: "./photoprism-storage"
+
+info: |
+  PhotoPrism läuft jetzt!
+  Öffne http://localhost:${port}
+  Login: admin / ${password}
+
+  Lege deine Fotos in ${photos_dir} ab und klicke auf "Index"!

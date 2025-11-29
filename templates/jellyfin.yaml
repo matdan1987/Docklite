@@ -1,0 +1,37 @@
+name: jellyfin
+description: Jellyfin Media Server - Deine eigene Netflix-Alternative
+image: jellyfin/jellyfin:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:8096"
+
+volumes:
+  - "${config_dir}:/config"
+  - "${media_dir}:/media"
+  - "${cache_dir}:/cache"
+
+environment:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "Europe/Berlin"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "8096"
+  config_dir:
+    description: "Config-Verzeichnis"
+    default: "./jellyfin-config"
+  media_dir:
+    description: "Media-Verzeichnis (Filme, Serien, Musik)"
+    default: "./media"
+  cache_dir:
+    description: "Cache-Verzeichnis"
+    default: "./jellyfin-cache"
+
+info: |
+  Jellyfin Media Server läuft jetzt!
+  Öffne http://localhost:${port} und richte deinen Media Server ein.
+  Lege deine Medien in ${media_dir} ab.

@@ -1,0 +1,26 @@
+name: uptime-kuma
+description: Uptime Kuma - Monitoring deiner Services
+image: louislam/uptime-kuma:1
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:3001"
+
+volumes:
+  - "${data_dir}:/app/data"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "3001"
+  data_dir:
+    description: "Daten-Verzeichnis"
+    default: "./uptime-kuma-data"
+
+info: |
+  Uptime Kuma läuft jetzt!
+  Öffne http://localhost:${port}
+
+  Überwache all deine Services, Websites und Server!
+  Erstelle beim ersten Start einen Admin-Account.

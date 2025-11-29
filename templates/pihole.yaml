@@ -1,0 +1,40 @@
+name: pihole
+description: Pi-hole - Netzwerkweiter Werbeblocker
+image: pihole/pihole:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${web_port}:80"
+  - "53:53/tcp"
+  - "53:53/udp"
+
+volumes:
+  - "${config_dir}:/etc/pihole"
+  - "${dnsmasq_dir}:/etc/dnsmasq.d"
+
+environment:
+  TZ: "Europe/Berlin"
+  WEBPASSWORD: "${password}"
+
+variables:
+  web_port:
+    description: "Web Interface Port"
+    default: "8888"
+  password:
+    description: "Admin Passwort"
+    default: "admin"
+  config_dir:
+    description: "Config-Verzeichnis"
+    default: "./pihole-config"
+  dnsmasq_dir:
+    description: "DNS Config-Verzeichnis"
+    default: "./pihole-dnsmasq"
+
+info: |
+  Pi-hole läuft jetzt!
+  Web Interface: http://localhost:${web_port}/admin
+  Passwort: ${password}
+
+  Stelle deinen Router DNS auf die IP dieses Servers,
+  um netzwerkweit Werbung zu blockieren!

@@ -1,0 +1,36 @@
+name: gitea
+description: Gitea - Leichtgewichtiger Git Server
+image: gitea/gitea:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${web_port}:3000"
+  - "${ssh_port}:22"
+
+volumes:
+  - "${data_dir}:/data"
+  - "/etc/timezone:/etc/timezone:ro"
+  - "/etc/localtime:/etc/localtime:ro"
+
+environment:
+  USER_UID: "1000"
+  USER_GID: "1000"
+
+variables:
+  web_port:
+    description: "Web UI Port"
+    default: "3000"
+  ssh_port:
+    description: "SSH Port für Git"
+    default: "2222"
+  data_dir:
+    description: "Daten-Verzeichnis"
+    default: "./gitea-data"
+
+info: |
+  Gitea läuft jetzt!
+  Öffne http://localhost:${web_port}
+
+  Erstelle beim ersten Start einen Admin-Account.
+  Dein eigener GitHub/GitLab Server!

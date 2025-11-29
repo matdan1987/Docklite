@@ -1,0 +1,33 @@
+name: syncthing
+description: Syncthing - Sichere File-Synchronisation
+image: syncthing/syncthing:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${web_port}:8384"
+  - "22000:22000/tcp"
+  - "22000:22000/udp"
+  - "21027:21027/udp"
+
+volumes:
+  - "${data_dir}:/var/syncthing"
+
+environment:
+  PUID: "1000"
+  PGID: "1000"
+
+variables:
+  web_port:
+    description: "Web UI Port"
+    default: "8384"
+  data_dir:
+    description: "Sync-Verzeichnis"
+    default: "./syncthing-data"
+
+info: |
+  Syncthing läuft jetzt!
+  Öffne http://localhost:${web_port}
+
+  Synchronisiere Dateien zwischen mehreren Geräten!
+  Installiere Syncthing auch auf deinen anderen Geräten.

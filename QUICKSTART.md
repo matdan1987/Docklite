@@ -1,6 +1,8 @@
-# ⚡ Quickstart - In 5 Minuten zum ersten Container
+# ⚡ Quickstart - In 5 Minuten zu deinem Homelab
 
-Diese Anleitung zeigt dir, wie du in 5 Minuten deinen ersten Docker Container mit Docklite startest - **ohne Docker-Vorkenntnisse**!
+Diese Anleitung zeigt dir, wie du in 5 Minuten deine erste Homelab-Anwendung mit Docklite startest - **ohne Docker-Vorkenntnisse**!
+
+🏠 Wähle aus **16 fertigen Homelab-Apps**: Media Server, Dashboards, Smart Home, Passwort Manager und mehr!
 
 ## Schritt 1: Voraussetzungen prüfen ✓
 

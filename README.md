@@ -1,6 +1,8 @@
-# 🐳 Docklite - Einfacher Docker Container Deployer
+# 🐳 Docklite - Einfacher Homelab Deployer
 
-Docklite ist ein benutzerfreundliches Python-Tool, mit dem du Docker Container kinderleicht nach Vorlagen deployen kannst. Perfekt für Einsteiger, die schnell und unkompliziert Docker Container einrichten möchten!
+Docklite ist ein benutzerfreundliches Python-Tool, mit dem du **fertige Homelab-Anwendungen** kinderleicht nach Vorlagen deployen kannst. Perfekt für Einsteiger, die schnell ihr eigenes Homelab aufbauen möchten - **ohne Docker-Kenntnisse**!
+
+🏠 **16 vorkonfigurierte Homelab-Apps:** Media Server, Smart Home, Dashboards, Passwort Manager, Git Server und mehr!
 
 ## ✨ Features
 
@@ -99,53 +101,61 @@ python docklite.py deploy nginx
 python docklite.py deploy nginx --var port=8080 --var html_dir=/path/to/html
 ```
 
-## 📦 Verfügbare Templates
+## 📦 Verfügbare Homelab-Anwendungen
 
-### Webserver & Proxy
-- **nginx** - Nginx Webserver
-- **wordpress** - WordPress CMS
+### 🎬 Media & Unterhaltung
+- **jellyfin** - Media Server (Netflix-Alternative)
+- **photoprism** - KI-basierte Fotoverwaltung
+
+### 🏠 Smart Home & Netzwerk
+- **homeassistant** - Smart Home Plattform
+- **pihole** - Netzwerkweiter Werbeblocker
+- **nginx-proxy-manager** - Reverse Proxy mit SSL
+
+### 📊 Dashboards & Monitoring
+- **homepage** - Modernes Homelab Dashboard
+- **heimdall** - Application Dashboard
+- **uptime-kuma** - Service Monitoring
+- **portainer** - Docker GUI Management
+
+### 🔐 Produktivität & Sicherheit
+- **vaultwarden** - Passwort Manager (Bitwarden)
+- **paperless-ngx** - Dokumenten-Management
 - **nextcloud** - Private Cloud Storage
+- **syncthing** - File-Synchronisation
 
-### Datenbanken
-- **postgres** - PostgreSQL Datenbank
-- **mysql** - MySQL Datenbank
-- **mariadb** - MariaDB Datenbank
-- **mongodb** - MongoDB NoSQL Datenbank
-
-### Cache & Storage
-- **redis** - Redis Cache Server
-
-### Management Tools
-- **portainer** - Docker GUI Management Tool
+### 💻 Development & Tools
+- **gitea** - Self-hosted Git Server
+- **wordpress** - CMS / Blog
+- **nginx** - Webserver
 
 ## 💡 Beispiele
 
-### Beispiel 1: Nginx Webserver starten
+### Beispiel 1: Jellyfin Media Server
 
 ```bash
-python docklite.py deploy nginx
+python docklite.py deploy jellyfin
 ```
 
-Das Skript fragt dich nach:
-- Port (Standard: 8080)
-- HTML-Verzeichnis (Standard: ./html)
+Deine eigene Netflix-Alternative! Lege deine Filme und Serien in das Media-Verzeichnis und streame sie überall.
 
-Nach dem Start kannst du auf `http://localhost:8080` zugreifen.
-
-### Beispiel 2: PostgreSQL Datenbank
+### Beispiel 2: Vaultwarden Passwort Manager
 
 ```bash
-python docklite.py deploy postgres
+python docklite.py deploy vaultwarden
 ```
 
-Konfiguriere:
-- Port (Standard: 5432)
-- Passwort
-- Benutzername
-- Datenbank-Name
-- Daten-Verzeichnis
+Sichere all deine Passwörter selbst-gehostet! Kompatibel mit Bitwarden Apps und Browser-Extensions.
 
-### Beispiel 3: Portainer (Docker GUI)
+### Beispiel 3: Homepage Dashboard
+
+```bash
+python docklite.py deploy homepage
+```
+
+Erstelle ein schönes Dashboard für all deine Homelab-Services!
+
+### Beispiel 4: Portainer (Docker GUI)
 
 ```bash
 python docklite.py deploy portainer

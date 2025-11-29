@@ -1,0 +1,29 @@
+name: homepage
+description: Homepage - Modernes Homelab Dashboard
+image: ghcr.io/gethomepage/homepage:latest
+detached: true
+restart: unless-stopped
+
+ports:
+  - "${port}:3000"
+
+volumes:
+  - "${config_dir}:/app/config"
+  - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+variables:
+  port:
+    description: "Web UI Port"
+    default: "3000"
+  config_dir:
+    description: "Config-Verzeichnis"
+    default: "./homepage-config"
+
+info: |
+  Homepage Dashboard läuft jetzt!
+  Öffne http://localhost:${port}
+
+  Modernes, anpassbares Dashboard für dein Homelab!
+  Zeigt alle deine Services, Docker Container und mehr.
+
+  Konfiguration in ${config_dir}/services.yaml
