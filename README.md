@@ -4,11 +4,13 @@ Docklite ist ein benutzerfreundliches Python-Tool, mit dem du Docker Container k
 
 ## ✨ Features
 
+- 🎯 **Interaktives Menü** - Benutzerfreundliches Menüsystem für Einsteiger
 - 📦 **Einfache Templates** - Vorkonfigurierte Vorlagen für beliebte Container
 - 🚀 **Schnelles Deployment** - Container mit einem Befehl starten
 - 🔧 **Interaktive Konfiguration** - Schritt-für-Schritt Einrichtung
 - 📝 **Keine Docker-Kenntnisse nötig** - Ideal für Anfänger
-- 🎯 **Erweiterbar** - Eigene Templates einfach hinzufügen
+- 🛠️ **Container-Verwaltung** - Stoppen, Starten und Entfernen über das Menü
+- 🎨 **Erweiterbar** - Eigene Templates einfach hinzufügen
 
 ## 📋 Voraussetzungen
 
@@ -51,37 +53,51 @@ Falls Docker noch nicht installiert ist:
 
 ## 📖 Verwendung
 
-### Verfügbare Templates anzeigen
+### ⭐ Interaktives Menü (EMPFOHLEN für Anfänger!)
+
+Einfach das Skript ohne Parameter starten:
+
+```bash
+python docklite.py
+```
+
+Du bekommst ein übersichtliches Menü mit folgenden Optionen:
+- 📦 Container deployen (starten)
+- 📋 Alle verfügbaren Templates anzeigen
+- ℹ️ Template-Informationen anzeigen
+- 🐳 Laufende Container anzeigen
+- 🛑 Container stoppen
+- 🗑️ Container entfernen
+
+**Das ist der einfachste Weg!** Perfekt für Einsteiger - keine Befehle merken, alles über das Menü!
+
+### Kommandozeilen-Modus (für Fortgeschrittene)
+
+Falls du lieber direkt Befehle eingibst:
+
+#### Verfügbare Templates anzeigen
 
 ```bash
 python docklite.py list
 ```
 
-Zeigt alle verfügbaren Container-Templates an.
-
-### Template-Informationen anzeigen
+#### Template-Informationen anzeigen
 
 ```bash
 python docklite.py info nginx
 ```
 
-Zeigt Details zu einem bestimmten Template (Ports, Volumes, Variablen, etc.).
-
-### Container deployen
+#### Container deployen
 
 ```bash
 python docklite.py deploy nginx
 ```
 
-Startet den interaktiven Deployment-Prozess. Du wirst nach allen notwendigen Informationen gefragt.
-
-### Mit benutzerdefinierten Variablen deployen
+#### Mit benutzerdefinierten Variablen deployen
 
 ```bash
 python docklite.py deploy nginx --var port=8080 --var html_dir=/path/to/html
 ```
-
-Überspringe die interaktive Eingabe, indem du Variablen direkt übergibst.
 
 ## 📦 Verfügbare Templates
 

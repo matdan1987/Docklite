@@ -37,9 +37,43 @@ pip install -r requirements.txt
 
 ## Schritt 3: Deinen ersten Container starten 🐳
 
-### Beispiel 1: Webserver (Nginx)
+### ⭐ Der einfachste Weg: Interaktives Menü (EMPFOHLEN!)
 
-**Was macht das?** Startet einen Webserver, der HTML-Dateien anzeigt.
+Starte einfach das Skript **ohne Parameter**:
+
+```bash
+python docklite.py
+```
+
+Du siehst jetzt ein schönes Menü wie dieses:
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║                   🐳  D O C K L I T E  🐳                    ║
+║           Einfacher Docker Container Deployer                ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 HAUPTMENÜ
+  [1] 📦 Container deployen (starten)
+  [2] 📋 Alle verfügbaren Templates anzeigen
+  [3] ℹ️  Template-Informationen anzeigen
+  [4] 🐳 Laufende Container anzeigen
+  [5] 🛑 Container stoppen
+  [6] 🗑️  Container entfernen
+  [0] ❌ Beenden
+```
+
+**So startest du deinen ersten Container:**
+1. Tippe `1` und drücke Enter (Container deployen)
+2. Wähle ein Template, z.B. `5` für nginx
+3. Beantworte die Fragen (oder drücke einfach Enter für Standardwerte)
+4. Fertig! 🎉
+
+**Das ist alles!** Super einfach, keine Befehle merken!
+
+### Alternative: Kommandozeilen-Modus
+
+Falls du die klassischen Befehle bevorzugst:
 
 ```bash
 # 1. Verfügbare Templates ansehen
@@ -63,7 +97,16 @@ echo "<h1>Hallo Welt! 🚀</h1>" > html/index.html
 
 **Glückwunsch! Dein erster Container läuft!** 🎉
 
-### Beispiel 2: Docker GUI (Portainer)
+### Weitere Beispiele mit dem Menü
+
+**Docker GUI (Portainer):**
+- Starte Menü: `python docklite.py`
+- Wähle `[1]` Container deployen
+- Wähle `portainer`
+- Bestätige alle Werte mit Enter
+- Öffne http://localhost:9000
+
+### Beispiel 2: Docker GUI (Portainer - alte Methode)
 
 **Was macht das?** Gibt dir eine grafische Oberfläche zum Verwalten deiner Container.
 
